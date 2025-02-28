@@ -9,3 +9,15 @@ License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: novoiceunheard
 */
+/* Contact Page */
+
+.query-inquiry .contact-general,
+.query-inquiry .contact-press,
+.query-inquiry .contact-volunteer {
+    display: none;
+}
+.query-inquiry-general .contact-general,
+.query-inquiry-press .contact-press,
+.query-inquiry-volunteer .contact-volunteer {
+    display: block;
+}
