@@ -21,3 +21,10 @@ Text Domain: novoiceunheard
 .query-inquiry-volunteer .contact-volunteer {
     display: block;
 }
+.query-inquiry-general .toggle-general a,
+.query-inquiry-press .toggle-press a,
+.query-inquiry-volunteer .toggle-volunteer a {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #000;
+}
