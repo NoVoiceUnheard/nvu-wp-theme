@@ -11,9 +11,9 @@ Text Domain: novoiceunheard
 */
 /* Contact Page */
 
-.query-inquiry .contact-general,
-.query-inquiry .contact-press,
-.query-inquiry .contact-volunteer {
+.page .contact-general,
+.page .contact-press,
+.page .contact-volunteer {
     display: none;
 }
 .query-inquiry-general .contact-general,
