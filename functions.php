@@ -8,6 +8,15 @@ function novoiceunheard_create_default_pages()
             'template' => 'home', // for templates/home.html
         ),
         array(
+            'title' => 'Organizations',
+            'template' => 'organizations',
+        ),
+        array(
+            'title' => 'Submit Organization',
+            'template' => 'organizer-submit',
+            'parent' => 'organizations',
+        ),
+        array(
             'title' => 'Contact',
             'template' => 'contact',
         ),
@@ -22,11 +31,23 @@ function novoiceunheard_create_default_pages()
         ]);
 
         if (!$query->have_posts()) {
+            $page_parent = null;
+            if ($page['parent']) {
+                $parent = get_page_by_path($page['parent']);
+
+                if ($parent) {
+                    $page_parent = $parent->ID;
+                } else {
+                    echo "Page not found.";
+                }
+            }
             $page_id = wp_insert_post(array(
                 'post_title' => $page['title'],
                 'post_status' => 'publish',
                 'post_type' => 'page',
+                'post_parent' => $page_parent
             ));
+
 
             if (!empty($page['template'])) {
                 update_post_meta($page_id, '_wp_page_template', $page['template']);
@@ -51,7 +72,10 @@ function create_navigation_block_menu()
 
         <!-- wp:navigation-submenu {"label":"Get Informed"} /-->
 
-        <!-- wp:navigation-submenu {"label":"Community Support"} /-->
+        <!-- wp:navigation-submenu {"label":"Community Support"} -->
+            <!-- wp:navigation-link {"label":"Organization Catalog","url":"' . home_url('/organizations/') . '"} /-->
+        <!-- /wp:navigation-submenu -->
+
         <!-- wp:navigation-submenu {"label":"NoVoiceUnheard","className":"wp-block-navigation__submenu-container"} -->
             <!-- wp:navigation-link {"label":"Contact","url":"' . home_url('/contact/') . '"} /-->
         <!-- /wp:navigation-submenu -->';
