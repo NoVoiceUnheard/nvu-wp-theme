@@ -39,7 +39,8 @@ function novoiceunheard_create_default_pages()
 add_action('after_switch_theme', 'novoiceunheard_create_default_pages');
 
 // set default menu
-function create_navigation_block_menu() {
+function create_navigation_block_menu()
+{
     if (get_posts(array('post_type' => 'wp_navigation'))) {
         return; // Exit if a navigation menu already exists
     }
@@ -57,9 +58,9 @@ function create_navigation_block_menu() {
 
     // Insert as a navigation block post
     wp_insert_post(array(
-        'post_title'   => 'Navigation',
-        'post_status'  => 'publish',
-        'post_type'    => 'wp_navigation',
+        'post_title' => 'Navigation',
+        'post_status' => 'publish',
+        'post_type' => 'wp_navigation',
         'post_content' => $navigation_block,
     ));
 }
@@ -89,3 +90,45 @@ function add_query_params_to_body_class($classes)
     return $classes;
 }
 add_filter('body_class', 'add_query_params_to_body_class');
+
+/* Check & Notify if Plugins Are Missing */
+function novoiceunheard_check_required_plugins()
+{
+    $required_plugins = [
+        'contact-form-7/wp-contact-form-7.php',  // Contact Form 7
+        'activitypub/activitypub.php', // ActivityPub
+        'amp/amp.php', // AMP
+        'cf7-registration/cf7-registration.php', // CF7 Registration
+        'cf7-to-custom-post/cf7-to-custom-post.php', // CF7 to Custom Post
+        'newsletter/plugin.php', // Newsletter
+        'wp-sms/wp-sms.php', // WP SMS
+    ];
+
+    $missing_plugins = [];
+
+    foreach ($required_plugins as $plugin) {
+        if (!is_plugin_active($plugin)) {
+            $missing_plugins[] = $plugin;
+        }
+    }
+
+    if (!empty($missing_plugins)) {
+        echo '<div class="notice notice-error"><p><strong>Required Plugins Missing:</strong> Please install and activate the following plugins:</p><ul>';
+        foreach ($missing_plugins as $plugin) {
+            $plugin_slug = dirname($plugin); // Plugin folder
+            $plugin_file = $plugin; // Full path including .php file
+
+            $nonce = wp_create_nonce('activate-plugin_' . $plugin_file);
+            $activation_url = wp_nonce_url(admin_url('plugins.php?action=activate&plugin=' . $plugin_file), 'activate-plugin_' . $plugin_file);
+
+            $install_url = admin_url('plugin-install.php?s=' . $plugin_slug . '&tab=search&type=term');
+
+            echo '<li>' . esc_html($plugin_slug) . ': 
+                <a href="' . esc_url($install_url) . '">install</a> | 
+                <a href="' . esc_url($activation_url) . '">activate</a>
+            </li>';
+        }
+        echo '</ul></div>';
+    }
+}
+add_action('admin_init', 'novoiceunheard_check_required_plugins');
