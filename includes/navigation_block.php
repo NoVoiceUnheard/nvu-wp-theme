@@ -6,8 +6,9 @@ if (!defined('ABSPATH')) {
 
 // Define the navigation block content
 $navigation_block = '<!-- wp:navigation-link {"label":"Home","url":"' . home_url('/') . '"} /-->
-<!-- wp:navigation-submenu {"label":"Take Action"} /-->
-
+<!-- wp:navigation-submenu {"label":"Take Action"} -->
+<!-- wp:navigation-link {"label":"Protest Listings","type":"page","id":115,"url":"' . home_url('/protest-listings/') . '","kind":"post-type"} /-->
+<!-- /wp:navigation-submenu -->
 <!-- wp:navigation-submenu {"label":"Get Informed"} /-->
 
 <!-- wp:navigation-submenu {"label":"Community Support"} -->

@@ -84,7 +84,16 @@ function novoiceunheard_create_default_pages()
     $pages = array(
         array(
             'title' => 'Home',
-            'template' => 'front-page', // for templates/home.html
+            'template' => 'front-page', // for templates/front-page.html
+        ),
+        array(
+            'title' => 'Protest Listings',
+            'template' => 'protest-listings',
+        ),
+        array(
+            'title' => 'Submit Listing',
+            'template' => 'listing-submit',
+            'parent' => 'protest-listings',
         ),
         array(
             'title' => 'Organizations',
