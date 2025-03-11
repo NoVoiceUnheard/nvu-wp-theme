@@ -28,3 +28,136 @@ Text Domain: novoiceunheard
     color: #000;
     border: 1px solid #000;
 }
+
+
+/*
+h2 {
+	font-size: 1.1em;
+	font-weight: 800;
+}
+
+.wp-block-post-title {
+	display: none;
+}
+
+.hero {
+	position: relative;
+    top: -1em;
+}
+*/
+
+
+
+
+
+
+/* TOP NAV */ 
+
+
+#topNav * {
+	z-index: 999;
+}
+
+#topNav > div > div {
+	padding-top: var(--wp--preset--spacing--30);
+    padding-bottom: var(--wp--preset--spacing--30);
+}
+
+#topNav .siteLogo {
+	width: 150px;
+}
+
+#topNav .wp-block-navigation__responsive-container .wp-block-navigation__responsive-container-content {
+    align-items: var(--navigation-layout-align, initial);
+    display: flex;
+    flex-direction: var(--navigation-layout-direction, initial);
+    flex-wrap: var(--navigation-layout-wrap, wrap);
+    justify-content: var(--navigation-layout-justify, initial);
+}
+
+#topNav .wp-block-navigation .wp-block-page-list, .wp-block-navigation__container, .wp-block-navigation__responsive-close, .wp-block-navigation__responsive-container, .wp-block-navigation__responsive-container-content, .wp-block-navigation__responsive-dialog {
+    gap: inherit;
+}
+
+#topNav li {
+	font-size: 1rem;
+    font-weight: 600;
+}
+
+#topNav li.ctaLink {
+	background-color: var(--wp--preset--color--accent-1);
+	color: var(--wp--preset--color--accent-2);
+	font-size: 0.8rem;
+    padding: 0.3em 1.2em;
+    border-radius: 1em;
+    font-weight: 800;
+}
+
+
+/* FOOTER */
+
+
+.footer img {
+	width: 150px;
+}
+
+/* HOMEPAGE HERO */
+
+
+#homeHero {
+	position: static;
+}
+
+.homeHero > span {
+	opacity: 0.3;
+	background-color: var(--wp--preset--color--accent-5);
+}
+
+.homeHero > img {
+	filter: url(#wp-duotone-090940-503aa8-2);
+}
+
+.homeHero h1 {
+	font-size: 6rem;
+    font-weight: 700;
+    letter-spacing: 0px;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+
+/* misc */
+
+
+div.imgColumns {
+	text-align: center;
+	margin: 3em;
+}
+div.imgColumns p {
+	font-size: 0.8em;
+}
+
+div.imgColumns > .wp-block-columns > .wp-block-column {
+	padding: 1.5em;
+}
+
+div.imgColumns > .wp-block-columns > .wp-block-column > figure > img {
+	border-radius: 100%;
+	padding: 1.5em;
+}
+
+div.partnerBlock img {
+	border-radius: 100%;
+	aspect-ratio: 1 / 1;
+	padding: 3em;
+}
+
+.founderBlock h3, .codeOfConduct h3, .rightsBlock h2, .immigrationResources h3, .resourcesBlock h3 {
+	color: var(--wp--preset--color--accent-1);
+	font-size: 1.5em;
+	padding: 1em 0;
+}
+
+.ctaBlock {
+	padding: 2em 0;
+}
