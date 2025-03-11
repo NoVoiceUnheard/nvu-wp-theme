@@ -5,7 +5,7 @@ function novoiceunheard_create_default_pages()
     $pages = array(
         array(
             'title' => 'Home',
-            'template' => 'home', // for templates/home.html
+            'template' => 'front-page', // for templates/home.html
         ),
         array(
             'title' => 'Organizations',
