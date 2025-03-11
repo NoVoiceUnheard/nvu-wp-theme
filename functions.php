@@ -118,16 +118,7 @@ add_filter('body_class', 'add_query_params_to_body_class');
 /* Check & Notify if Plugins Are Missing */
 function novoiceunheard_check_required_plugins()
 {
-    $required_plugins = [
-        'contact-form-7/wp-contact-form-7.php',  // Contact Form 7
-        'activitypub/activitypub.php', // ActivityPub
-        'amp/amp.php', // AMP
-        'cf7-registration/cf7-registration.php', // CF7 Registration
-        'cf7-to-custom-post/cf7-to-custom-post.php', // CF7 to Custom Post
-        'newsletter/plugin.php', // Newsletter
-        'wp-sms/wp-sms.php', // WP SMS
-    ];
-
+    $required_plugins = require get_stylesheet_directory() . '/required_plugins.php';
     $missing_plugins = [];
 
     foreach ($required_plugins as $plugin) {
@@ -148,8 +139,8 @@ function novoiceunheard_check_required_plugins()
             $install_url = admin_url('plugin-install.php?s=' . $plugin_slug . '&tab=search&type=term');
 
             echo '<li>' . esc_html($plugin_slug) . ': 
-                <a href="' . esc_url($install_url) . '">install</a> | 
-                <a href="' . esc_url($activation_url) . '">activate</a>
+                <a href="' . esc_url($install_url) . '">Install</a> | 
+                <a href="' . esc_url($activation_url) . '">Activate</a>
             </li>';
         }
         echo '</ul></div>';
