@@ -14,7 +14,7 @@ foreach ($includes as $file) {
 
 add_action('after_switch_theme', 'novoiceunheard_create_default_pages');
 
-add_action('after_switch_theme', 'create_navigation_block_menu');
+add_action('admin_init', 'create_navigation_block_menu');
 
 add_action('wp_enqueue_scripts', 'novoiceunheard_enqueue_styles');
 

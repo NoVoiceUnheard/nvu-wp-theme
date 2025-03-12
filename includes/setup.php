@@ -9,7 +9,7 @@ function create_navigation_block_menu()
     if (get_posts(array('post_type' => 'wp_navigation'))) {
         return; // Exit if a navigation menu already exists
     }
-    $template_path = require get_stylesheet_directory() . '/includes/navigation_block.php';
+    $template_path = dirname(__FILE__) . '/navigation_block.php';
     if (file_exists($template_path)) {
         include $template_path;
     } else {
@@ -19,7 +19,7 @@ function create_navigation_block_menu()
 
     // Insert as a navigation block post
     wp_insert_post(array(
-        'post_title' => 'Navigation',
+        'post_title' => 'NVU Navigation',
         'post_status' => 'publish',
         'post_type' => 'wp_navigation',
         'post_content' => $navigation_block,
