@@ -69,10 +69,18 @@ function add_query_params_to_body_class($classes)
     if (!empty($_GET)) {
         foreach ($_GET as $key => $value) {
             $sanitized_key = sanitize_html_class($key);
-            $sanitized_value = sanitize_html_class($value);
-            $classes[] = "query-{$sanitized_key}";
-            if (!empty($sanitized_value)) {
-                $classes[] = "query-{$sanitized_key}-{$sanitized_value}";
+            
+            if (is_array($value)) {
+                foreach ($value as $sub_value) {
+                    $sanitized_sub_value = sanitize_html_class($sub_value);
+                    $classes[] = "query-{$sanitized_key}-{$sanitized_sub_value}";
+                }
+            } else {
+                $sanitized_value = sanitize_html_class($value);
+                $classes[] = "query-{$sanitized_key}";
+                if (!empty($sanitized_value)) {
+                    $classes[] = "query-{$sanitized_key}-{$sanitized_value}";
+                }
             }
         }
     }
