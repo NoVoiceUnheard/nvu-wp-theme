@@ -161,3 +161,65 @@ div.partnerBlock img {
 .ctaBlock {
 	padding: 2em 0;
 }
+
+/* Listing pages */
+.cf7-submission-list {
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	padding: 0;
+}
+.cf7-submission-list li {
+	display: flex;
+	background-color: var(--wp--preset--color--accent-3);
+	margin: 0 0 15px;
+	border-radius: 5px;
+}
+.cf7-submission-list .submission-date {
+	flex-basis: 100px;
+	flex-shrink: 0;
+	text-align: center;
+	align-content: center;
+	background-color: var(--wp--preset--color--contrast);
+	color: var(--wp--preset--color--base);
+	border-radius: 5px 0 0 5px;
+}
+.cf7-submission-list .submission-date p {
+	font-weight: bold;
+	font-size: 20px;
+}
+.cf7-submission-list .submission-content {
+	padding: 15px;
+}
+.cf7-submission-list h3 {
+	margin: 0;
+	font-size: 18px;
+	margin-bottom: 10px;
+}
+.cf7-submission-list h4 {
+	font-weight: 500;
+	font-size: 14px;
+	margin: 0;
+}
+.cf7-submission-list p {
+	margin: 0 0 10px;
+	font-size: 14px;
+}
+.cf7-submission-list .location {
+	font-size: 60%;
+	font-weight: bold;
+	margin: 0;
+}
+.wp-block-search__inside-wrapper {
+	display: flex;
+}
+.wp-block-search__input {
+	height: 64px;
+	border: 0;
+	border-radius: 50px 0 0 50px;
+	padding: 0 20px;
+}
+.wp-block-search__button {
+	border-radius: 0 50px 50px 0;
+	height: 64px;
+}
