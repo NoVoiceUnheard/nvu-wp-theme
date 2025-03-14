@@ -210,3 +210,16 @@ div.partnerBlock img {
 	font-weight: bold;
 	margin: 0;
 }
+.wp-block-search__inside-wrapper {
+	display: flex;
+}
+.wp-block-search__input {
+	height: 64px;
+	border: 0;
+	border-radius: 50px 0 0 50px;
+	padding: 0 20px;
+}
+.wp-block-search__button {
+	border-radius: 0 50px 50px 0;
+	height: 64px;
+}
