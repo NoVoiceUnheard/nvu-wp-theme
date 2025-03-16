@@ -19,11 +19,22 @@
         <!-- wp:paragraph -->
         <p><a href="/">Information for Organizers</a></p>
         <!-- /wp:paragraph -->
-		<!-- wp:buttons -->
-        <div class="wp-block-buttons"><!-- wp:button -->
-            <div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/submit-listing/">Submit a Protest</a></div>
-        <!-- /wp:button --></div>
-        <!-- /wp:buttons -->
+        <!-- wp:group {"layout":{"type":"flex","justifyContent":"space-between"}} -->
+        <div class="wp-block-group">
+            <!-- wp:buttons -->
+            <div class="wp-block-buttons"><!-- wp:button -->
+                <div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/submit-listing/">Submit a Protest</a></div>
+            <!-- /wp:button --></div>
+             <form action="/protest-listings/" class="wp-block-search__button-outside wp-block-search__text-button wp-block-search">
+                <div class="wp-block-search__inside-wrapper">
+                    <input class="wp-block-search__input" placeholder="Event Location" value="" type="search" name="q">
+                    <button aria-label="Search" class="wp-block-search__button wp-element-button" type="submit">Search</button>
+                </div>
+             </form>
+            <!-- /wp:buttons -->
+        </div>
+        <!-- /wp:group -->
+         <!-- wp:cf7/submission-block {"postType":"cf7_protest-listing"} /-->
 	</div>
 	<!-- /wp:group -->
 </main>
