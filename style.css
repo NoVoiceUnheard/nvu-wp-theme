@@ -171,7 +171,7 @@ div.partnerBlock img {
 }
 .cf7-submission-list li {
 	display: flex;
-	background-color: var(--wp--preset--color--accent-3);
+	background-color: var(--wp--preset--color--accent-2);
 	margin: 0 0 15px;
 	border-radius: 5px;
 }
@@ -205,6 +205,9 @@ div.partnerBlock img {
 	margin: 0 0 10px;
 	font-size: 14px;
 }
+.cf7-submission-list .tag {
+	font-size: 14px;
+}
 .cf7-submission-list .location {
 	font-size: 60%;
 	font-weight: bold;
@@ -215,6 +218,7 @@ div.partnerBlock img {
 }
 .wp-block-search__input {
 	height: 64px;
+	width: 100%;
 	border: 0;
 	border-radius: 50px 0 0 50px;
 	padding: 0 20px;

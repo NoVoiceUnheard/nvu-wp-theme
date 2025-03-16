@@ -2,23 +2,37 @@
 
 <!-- wp:group {"tagName":"main","style":{"spacing":{"margin":{"top":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
 <main class="wp-block-group" style="margin-top:var(--wp--preset--spacing--60)">
-	<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
-	<div class="wp-block-group alignfull" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)">
-		<!-- wp:post-featured-image {"style":{"spacing":{"margin":{"bottom":"var:preset|spacing|60"}}}} /-->
-		<!-- wp:post-title {"level":1} /-->
-		<!-- wp:heading -->
+    <!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
+    <div class="wp-block-group alignfull"
+        style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)">
+        <!-- wp:post-featured-image {"style":{"spacing":{"margin":{"bottom":"var:preset|spacing|60"}}}} /-->
+        <!-- wp:post-title {"level":1} /-->
+        <!-- wp:heading -->
         <h2 class="wp-block-heading">Find Organizers Near You</h2>
         <!-- /wp:heading -->
+        <!-- wp:columns -->
+        <div class="wp-block-columns"><!-- wp:column {"width":"50%"} -->
+            <div class="wp-block-column" style="flex-basis:50%">
+                <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"left"}} -->
+                <div class="wp-block-buttons"><!-- wp:button -->
+                    <div class="wp-block-button"><a class="wp-block-button__link wp-element-button"
+                            href="/submit-organization/">Submit your organization</a></div>
+                    <!-- /wp:button -->
+                </div>
+                <!-- /wp:buttons -->
+            </div>
+            <!-- /wp:column -->
 
-        <!-- wp:buttons -->
-        <div class="wp-block-buttons"><!-- wp:button -->
-        <div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/submit-organization/">Submit your organization</a></div>
-        <!-- /wp:button --></div>
-        <!-- /wp:buttons -->
-
+            <!-- wp:column {"width":"50%"} -->
+            <div class="wp-block-column" style="flex-basis:50%;text-align: right;">
+                <!-- wp:custom/tag-dropdown /-->
+            </div>
+            <!-- /wp:column -->
+        </div>
+        <!-- /wp:columns -->
         <!-- wp:cf7/submission-block {"postType":"cf7_organizations"} /-->
-	</div>
-	<!-- /wp:group -->
+    </div>
+    <!-- /wp:group -->
 </main>
 <!-- /wp:group -->
 
