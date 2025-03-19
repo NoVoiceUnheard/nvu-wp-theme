@@ -21,3 +21,5 @@ add_action('wp_enqueue_scripts', 'novoiceunheard_enqueue_styles');
 add_filter('body_class', 'add_query_params_to_body_class');
 
 add_action('admin_init', 'novoiceunheard_check_required_plugins');
+
+add_action('wp_head', 'add_google_analytics');

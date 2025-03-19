@@ -30,6 +30,11 @@ function novoiceunheard_enqueue_styles()
 {
     wp_enqueue_style('twentytwentyfive', get_template_directory_uri() . '/style.css');
     wp_enqueue_style('novoiceunheard', get_stylesheet_directory_uri() . '/style.css', ['twentytwentyfive']);
+    // Enqueue Select2 CSS
+    wp_enqueue_style('select2-css', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css');
+
+    // Enqueue Select2 JS
+    wp_enqueue_script('select2-js', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array('jquery'), null, true);
 }
 
 /* Check & Notify if Plugins Are Missing */
@@ -151,4 +156,17 @@ function novoiceunheard_create_default_pages()
         }
         wp_reset_postdata();
     }
+}
+
+function add_google_analytics() {
+    ?>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KFMGK95TZ9"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-KFMGK95TZ9');
+    </script>
+    <?php
 }
