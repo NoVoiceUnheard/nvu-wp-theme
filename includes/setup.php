@@ -170,3 +170,25 @@ function add_google_analytics() {
     </script>
     <?php
 }
+
+function add_custom_admin_bar_link($wp_admin_bar) {
+    $pending_count = wp_count_posts('cf7_protest-listing')->pending ?? 0;
+    $pending_org_count = wp_count_posts('cf7_organizations')->pending ?? 0;
+    // Check if we are on the specific page
+    if (!is_admin() && is_page('protest-listings')) {  
+        $wp_admin_bar->add_node(array(
+            'id'    => 'pending_protest_listings',
+            'title' => "Pending Protest Listings ($pending_count)",
+            'href'  => admin_url('edit.php?post_status=pending&post_type=cf7_protest-listing'),
+            'meta'  => array('title' => 'View Pending Protest Listings')
+        ));
+    }
+    if (!is_admin() && is_page('organizations')) {  
+        $wp_admin_bar->add_node(array(
+            'id'    => 'pending_organizations',
+            'title' => "Pending Organizations ($pending_org_count)",
+            'href'  => admin_url('edit.php?post_status=pending&post_type=cf7_organizations'),
+            'meta'  => array('title' => 'View Pending Organizations')
+        ));
+    }
+}
