@@ -25,3 +25,5 @@ add_action('admin_init', 'novoiceunheard_check_required_plugins');
 add_action('wp_head', 'add_google_analytics');
 // Hook into the admin bar
 add_action('admin_bar_menu', 'add_custom_admin_bar_link', 100);
+
+add_action( 'wp_head', 'add_pwa_manifest' );

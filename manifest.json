@@ -1,0 +1,21 @@
+{
+    "name": "NoVoiceUnheard",
+    "short_name": "NVU",
+    "description": "NoVoiceUnheard aims to empower all those whom the current U.S. administration and its operatives seek to silence. And in 2025, if you object to policies, fall outside of certain demographics, are not a member of the 1% who hold 30% of this country’s wealth, voted blue—or simply voted at all—that’s you.",
+    "start_url": "https://www.nvunheard.org/",
+    "display": "standalone",
+    "background_color": "#090940",
+    "theme_color": "#ffffff",
+    "icons": [
+      {
+        "src": "/wp-content/themes/novoiceunheard/images/icon-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "/wp-content/themes/novoiceunheard/images/icon-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+  }

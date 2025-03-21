@@ -192,3 +192,11 @@ function add_custom_admin_bar_link($wp_admin_bar) {
         ));
     }
 }
+
+function add_pwa_manifest() {
+    // Define the path to your manifest file
+    $manifest_path = get_stylesheet_directory_uri() . '/manifest.json'; // Adjust the path if it's located in a subfolder, like /assets/
+    
+    // Enqueue the manifest link tag in the head section
+    echo '<link rel="manifest" href="' . esc_url( $manifest_path ) . '">';
+}
