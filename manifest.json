@@ -5,7 +5,7 @@
     "start_url": "https://www.nvunheard.org/",
     "display": "standalone",
     "background_color": "#090940",
-    "theme_color": "#ffffff",
+    "theme_color": "#090940",
     "icons": [
       {
         "src": "/wp-content/themes/novoiceunheard/images/icon-192x192.png",
