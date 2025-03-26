@@ -28,8 +28,9 @@ function create_navigation_block_menu()
 // Enqueue parent theme styles
 function novoiceunheard_enqueue_styles()
 {
+    $theme_version = wp_get_theme()->get('Version'); // Uses theme version as cache buster
     wp_enqueue_style('twentytwentyfive', get_template_directory_uri() . '/style.css');
-    wp_enqueue_style('novoiceunheard', get_stylesheet_directory_uri() . '/style.css', ['twentytwentyfive']);
+    wp_enqueue_style('novoiceunheard', get_stylesheet_directory_uri() . '/style.css', ['twentytwentyfive'], $theme_version);
     // Enqueue Select2 CSS
     wp_enqueue_style('select2-css', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css');
 
