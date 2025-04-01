@@ -75,7 +75,7 @@ function add_query_params_to_body_class($classes)
     if (!empty($_GET)) {
         foreach ($_GET as $key => $value) {
             $sanitized_key = sanitize_html_class($key);
-            
+
             if (is_array($value)) {
                 foreach ($value as $sub_value) {
                     $sanitized_sub_value = sanitize_html_class($sub_value);
@@ -159,45 +159,122 @@ function novoiceunheard_create_default_pages()
     }
 }
 
-function add_google_analytics() {
+function add_google_analytics()
+{
     ?>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-KFMGK95TZ9"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-KFMGK95TZ9');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-KFMGK95TZ9');
     </script>
     <?php
 }
 
-function add_custom_admin_bar_link($wp_admin_bar) {
+function add_custom_admin_bar_link($wp_admin_bar)
+{
     $pending_count = wp_count_posts('cf7_protest-listing')->pending ?? 0;
     $pending_org_count = wp_count_posts('cf7_organizations')->pending ?? 0;
     // Check if we are on the specific page
-    if (!is_admin() && is_page('protest-listings')) {  
+    if (!is_admin() && is_page('protest-listings')) {
         $wp_admin_bar->add_node(array(
-            'id'    => 'pending_protest_listings',
+            'id' => 'pending_protest_listings',
             'title' => "Pending Protest Listings ($pending_count)",
-            'href'  => admin_url('edit.php?post_status=pending&post_type=cf7_protest-listing'),
-            'meta'  => array('title' => 'View Pending Protest Listings')
+            'href' => admin_url('edit.php?post_status=pending&post_type=cf7_protest-listing'),
+            'meta' => array('title' => 'View Pending Protest Listings')
         ));
     }
-    if (!is_admin() && is_page('organizations')) {  
+    if (!is_admin() && is_page('organizations')) {
         $wp_admin_bar->add_node(array(
-            'id'    => 'pending_organizations',
+            'id' => 'pending_organizations',
             'title' => "Pending Organizations ($pending_org_count)",
-            'href'  => admin_url('edit.php?post_status=pending&post_type=cf7_organizations'),
-            'meta'  => array('title' => 'View Pending Organizations')
+            'href' => admin_url('edit.php?post_status=pending&post_type=cf7_organizations'),
+            'meta' => array('title' => 'View Pending Organizations')
         ));
     }
 }
 
-function add_pwa_manifest() {
+function add_pwa_manifest()
+{
     // Define the path to your manifest file
     $manifest_path = get_stylesheet_directory_uri() . '/manifest.json'; // Adjust the path if it's located in a subfolder, like /assets/
-    
+
     // Enqueue the manifest link tag in the head section
-    echo '<link rel="manifest" href="' . esc_url( $manifest_path ) . '">';
+    echo '<link rel="manifest" href="' . esc_url($manifest_path) . '">';
+}
+function custom_dashboard_widget() {
+    wp_add_dashboard_widget(
+        'custom_dashboard_card',
+        'NoVoiceUnheard',
+        'custom_dashboard_widget_display'
+    );
+    if (!current_user_can('administrator')) {
+        // Remove "At a Glance" widget
+        remove_meta_box('dashboard_right_now', 'dashboard', 'normal');
+
+        // Remove "Activity" widget
+        remove_meta_box('dashboard_activity', 'dashboard', 'normal');
+
+        // Remove "Quick Draft" widget
+        remove_meta_box('dashboard_quick_press', 'dashboard', 'side');
+
+        // Remove "WordPress News" widget
+        remove_meta_box('dashboard_primary', 'dashboard', 'side');
+
+        // Remove "Recent Comments" widget
+        remove_meta_box('dashboard_recent_comments', 'dashboard', 'normal');
+        
+        // Optionally remove other widgets added by plugins
+        // remove_meta_box('plugin_widget_id', 'dashboard', 'normal'); // Example for plugin widgets
+    }
+}
+
+function custom_dashboard_widget_display() {
+    // Retrieve saved content
+    $content = get_option('custom_dashboard_card_content', '<p>Welcome to your dashboard! Edit this content.</p>');
+
+    ?>
+    <style>
+        .dashboard-editor { display: none; margin-top: 10px; }
+        .dashboard-card-preview { border: 1px solid #ccc; padding: 10px; background: #fff; margin-top: 10px; }
+    </style>
+
+    <div class="dashboard-card-preview">
+        <div><?php echo wp_kses_post($content); ?></div>
+    </div>
+
+    <div class="dashboard-editor">
+        <form method="post">
+            <textarea name="dashboard_card_content" style="width:100%; height:100px;"><?php echo esc_textarea($content); ?></textarea>
+            <br>
+            <input type="submit" name="save_dashboard_card" value="Save" class="button button-primary">
+        </form>
+    </div>
+    <p>
+        <button id="toggle-editor" class="button">Toggle Editor</button>
+    </p>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var toggleButton = document.getElementById("toggle-editor");
+            var editorDiv = document.querySelector(".dashboard-editor");
+
+            toggleButton.addEventListener("click", function() {
+                if (editorDiv.style.display === "none" || editorDiv.style.display === "") {
+                    editorDiv.style.display = "block";
+                } else {
+                    editorDiv.style.display = "none";
+                }
+            });
+        });
+    </script>
+
+    <?php
+
+    // Save the content when submitted
+    if (isset($_POST['save_dashboard_card'])) {
+        update_option('custom_dashboard_card_content', wp_kses_post($_POST['dashboard_card_content']));
+        echo '<p style="color: green;">Saved! Refresh to see the changes.</p>';
+    }
 }

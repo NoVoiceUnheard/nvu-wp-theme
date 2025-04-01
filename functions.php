@@ -27,3 +27,5 @@ add_action('wp_head', 'add_google_analytics');
 add_action('admin_bar_menu', 'add_custom_admin_bar_link', 100);
 
 add_action( 'wp_head', 'add_pwa_manifest' );
+
+add_action('wp_dashboard_setup', 'custom_dashboard_widget', 999);
