@@ -4,7 +4,7 @@ Theme URI: https://github.com/NoVoiceUnheard/nvu-wp-theme/
 Description: Child theme for Twenty Twenty-Five
 Author: @natedoesweb
 Template: twentytwentyfive
-Version: 1.0.4
+Version: 1.0.7
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: novoiceunheard
@@ -130,9 +130,13 @@ Text Domain: novoiceunheard
 	border-radius: 5px;
 	box-shadow: #000 0px 0px 3px;
 	transition: all .5s;
+	background-image: url(/wp-content/themes/novoiceunheard/images/chevron-right.svg);
+	background-repeat: no-repeat;
+	background-size: 16px 24px;
+	background-position: calc(100% - 8px) center;
 }
 .cf7-submission-list .submission-content {
-	padding: 15px;
+	padding: 15px 24px 15px 15px;
 }
 .cf7-submission-list li:hover {
 	box-shadow: #000 0px 0px 10px;
@@ -148,8 +152,8 @@ Text Domain: novoiceunheard
 	border-radius: 5px 0 0 5px;
 }
 .cf7-submission-list .submission-date p {
-	font-weight: bold;
 	font-size: 20px;
+	font-weight: bold;
 }
 .cf7-submission-list h3 {
 	margin: 0;
@@ -161,17 +165,22 @@ Text Domain: novoiceunheard
 	font-size: 14px;
 	margin: 0;
 }
-.cf7-submission-list p {
+.cf7-submission-list p,
+.cf7-submission-list .content {
 	margin: 0 0 10px;
 	font-size: 14px;
 }
 .cf7-submission-list .tag {
 	font-size: 14px;
 }
-.cf7-submission-list .location {
-	font-size: 60%;
+.cf7-submission-list .location,
+.cf7-modal-content .location {
 	font-weight: bold;
-	margin: 0;
+	margin: 0 0 8px;
+	background-image: url(/wp-content/themes/novoiceunheard/images/location-pin.svg);
+	background-size: 14px;
+	background-repeat: no-repeat;
+	padding-left: 20px;
 }
 .wp-block-search__inside-wrapper {
 	display: flex;
@@ -186,6 +195,10 @@ Text Domain: novoiceunheard
 .wp-block-search__button {
 	border-radius: 0 50px 50px 0;
 	height: 64px;
+}
+
+body:not(.query-q) .clear-filter {
+	display: none;
 }
 
 /* CONTENT */
@@ -390,14 +403,13 @@ h2 {
 }
 
 .cf7-modal-content {
-    background: var(--wp--preset--color--contrast);
-	color: var(--wp--preset--color--base);
+    color: var(--wp--preset--color--contrast);
+	background-color: var(--wp--preset--color--base);
     max-width: 600px;
 	margin: auto;
     width: 90%;
     max-height: 80vh; /* Ensure it doesn’t exceed viewport height */
     overflow-y: auto; /* Allows scrolling within the modal */
-    padding: 20px;
     border-radius: 8px;
     position: relative;
 }
@@ -405,33 +417,76 @@ h2 {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	padding: 20px;
 }
 .cf7-modal-content h2,
 .cf7-modal-content h4,
-.cf7-modal-content p {
+.cf7-modal-content p,
+.cf7-modal-content span {
 	padding: 0;
 	margin: 0 0 10px;
-	color: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--contrast);
+	font-size: 14px;
+}
+.cf7-modal-content .actions {
+	display: flex;
+	justify-content: space-between;
+}
+.cf7-modal-content h2,
+.cf7-modal-content h4 {
+	font-size: 16px;
+	line-height: 18px;
+}
+.cf7-modal-content .organizer {
+	font-size: 14px;
+	line-height: 14px;
 }
 .cf7-modal-content h4 {
 	margin: 0;
+}
+.cf7-modal-content .submission-date p {
+	margin: 0;
+}
+.cf7-modal-content .submission-date {
+	background-image: url(/wp-content/themes/novoiceunheard/images/calendar.svg);
+	background-repeat: no-repeat;
+	background-size: 14px;
+	background-position: center left;
+	padding-left: 20px;
+}
+.cf7-modal-content .link {
+	background-image: url(/wp-content/themes/novoiceunheard/images/link.svg);
+	background-repeat: no-repeat;
+	background-position: center left;
+	background-size: 16px;
+	padding-left: 20px;
 }
 
 .cf7-modal-content .image {
 	display: flex;
 	max-height: 300px;
 	justify-content: center;
+	margin-bottom: 8px;
 }
 .cf7-modal-content .image img {
 	max-width: 100%;
 }
-
-.cf7-close {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 24px;
-    cursor: pointer;
+.topbar {
+	border-bottom: 1px solid var(--wp--preset--color--accent-2);
+}
+/* Mobile */
+@media screen and (max-width: 600px) {
+	.cf7-modal-content {
+		max-height: 100vh;
+		height: 100%;
+		width: 100%;
+		padding: 0;
+		margin: 0;
+		border-radius: 0;
+	}
+	.cf7-modal-content #modal-body {
+		padding: 16px;
+	}
 }
 
 /* BLOG */
@@ -469,4 +524,48 @@ h2 {
 #protest-map a:hover {
 	color: var(--wp--preset--color--accent-3);
 	transition: color 0s;
+}
+/* PROTEST LISTING */
+.close-button {
+	display: block;
+	background-image: url(/wp-content/themes/novoiceunheard/images/xmark.svg);
+	background-repeat: no-repeat;
+	background-size: 32px 32px;
+	background-position: center;
+	width: 48px;
+	height: 48px;
+	text-indent: -99999px;
+	cursor: pointer;
+	margin: 0 !important;
+}
+.close-button a {
+	display: block;
+	height: 100%;
+	width: 100%;
+}
+.protest-submission h2 {
+	color: inherit;
+}
+.protest-submission input,
+.protest-submission textarea {
+	width: 100%;
+	height: auto;
+	padding: 10px 15px;
+	border-radius: 25px;
+	border: 0;
+	margin-top: 5px;
+}
+.input-group p {
+	display: flex;
+	flex-direction: row;
+	gap: 16px;
+}
+.input-group br {
+	display: none;
+}
+.input-group label {
+	flex-basis: 50%;
+}
+.input-group .wpcf7-form-control-wrap {
+	display: flex;
 }
