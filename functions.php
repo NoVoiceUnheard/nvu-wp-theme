@@ -36,3 +36,6 @@ add_filter('query_vars', 'novoiceunheard_register_query_vars');
 add_action('pre_get_posts', 'add_custom_post_types_to_rss_feed');
 add_filter('the_excerpt_rss', 'custom_rss_content');
 add_filter('the_content_feed', 'custom_rss_content');
+add_filter('pre_get_document_title', 'custom_protest_listings_title');
+// Hook into Yoast SEO title
+add_filter('wpseo_title', 'custom_protest_listings_title');

@@ -26,7 +26,8 @@ function create_navigation_block_menu()
     ));
 }
 // Enqueue parent theme styles
-function novoiceunheard_strip_assets_on_links_page() {
+function novoiceunheard_strip_assets_on_links_page()
+{
     if (is_page('links')) {
         // Deregister default scripts/styles you don’t want
         wp_dequeue_style('twentytwentyfive'); // Example: theme CSS
@@ -107,7 +108,8 @@ function novoiceunheard_check_required_plugins()
     }
 }
 // add query params to body class
-function add_query_vars_to_body_class($classes) {
+function add_query_vars_to_body_class($classes)
+{
     // Handle 'state'
     $state = get_query_var('state');
     if (!empty($state)) {
@@ -242,7 +244,8 @@ function add_pwa_manifest()
     // Enqueue the manifest link tag in the head section
     echo '<link rel="manifest" href="' . esc_url($manifest_path) . '">';
 }
-function custom_dashboard_widget() {
+function custom_dashboard_widget()
+{
     wp_add_dashboard_widget(
         'custom_dashboard_card',
         'NoVoiceUnheard',
@@ -263,20 +266,30 @@ function custom_dashboard_widget() {
 
         // Remove "Recent Comments" widget
         remove_meta_box('dashboard_recent_comments', 'dashboard', 'normal');
-        
+
         // Optionally remove other widgets added by plugins
         // remove_meta_box('plugin_widget_id', 'dashboard', 'normal'); // Example for plugin widgets
     }
 }
 
-function custom_dashboard_widget_display() {
+function custom_dashboard_widget_display()
+{
     // Retrieve saved content
     $content = get_option('custom_dashboard_card_content', '<p>Welcome to your dashboard! Edit this content.</p>');
 
     ?>
     <style>
-        .dashboard-editor { display: none; margin-top: 10px; }
-        .dashboard-card-preview { border: 1px solid #ccc; padding: 10px; background: #fff; margin-top: 10px; }
+        .dashboard-editor {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .dashboard-card-preview {
+            border: 1px solid #ccc;
+            padding: 10px;
+            background: #fff;
+            margin-top: 10px;
+        }
     </style>
 
     <div class="dashboard-card-preview">
@@ -285,7 +298,8 @@ function custom_dashboard_widget_display() {
 
     <div class="dashboard-editor">
         <form method="post">
-            <textarea name="dashboard_card_content" style="width:100%; height:100px;"><?php echo esc_textarea($content); ?></textarea>
+            <textarea name="dashboard_card_content"
+                style="width:100%; height:100px;"><?php echo esc_textarea($content); ?></textarea>
             <br>
             <input type="submit" name="save_dashboard_card" value="Save" class="button button-primary">
         </form>
@@ -294,11 +308,11 @@ function custom_dashboard_widget_display() {
         <button id="toggle-editor" class="button">Toggle Editor</button>
     </p>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             var toggleButton = document.getElementById("toggle-editor");
             var editorDiv = document.querySelector(".dashboard-editor");
 
-            toggleButton.addEventListener("click", function() {
+            toggleButton.addEventListener("click", function () {
                 if (editorDiv.style.display === "none" || editorDiv.style.display === "") {
                     editorDiv.style.display = "block";
                 } else {
@@ -317,7 +331,8 @@ function custom_dashboard_widget_display() {
     }
 }
 
-function novoiceunheard_contact_rewrite_rule() {
+function novoiceunheard_contact_rewrite_rule()
+{
     add_rewrite_rule('^contact/(general|press|volunteer)/?$', 'index.php?pagename=contact&inquiry=$matches[1]', 'top');
 
     add_rewrite_rule(
@@ -348,7 +363,17 @@ function custom_rss_content($content)
     }
     return $content;
 }
-function novoiceunheard_register_query_vars($vars) {
+function novoiceunheard_register_query_vars($vars)
+{
     $vars[] = 'inquiry';
     return $vars;
+}
+function custom_protest_listings_title($title)
+{
+    // Check if we're on the Protest Listings page with a 'state' query var
+    if (is_page('protest-listings') && get_query_var('state')) {
+        $state = get_query_var('state');  // Get the state from the URL
+        $title = 'Protest Listings in ' . ucfirst(sanitize_text_field($state)) . ' - NoVoiceUnheard';
+    }
+    return $title;
 }
