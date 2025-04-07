@@ -319,6 +319,34 @@ function custom_dashboard_widget_display() {
 
 function novoiceunheard_contact_rewrite_rule() {
     add_rewrite_rule('^contact/(general|press|volunteer)/?$', 'index.php?pagename=contact&inquiry=$matches[1]', 'top');
+
+    add_rewrite_rule(
+        '^protest-listings/feed/?$',
+        'index.php?post_type=cf7_protest-listing&feed=rss2',
+        'top'
+    );
+}
+function add_custom_post_types_to_rss_feed($query)
+{
+    // Ensure we're working with the main query and the feed
+    if ($query->is_feed() && $query->is_main_query()) {
+        // Check if the feed is specifically for protest listings
+        if (is_post_type_archive('cf7_protest-listing') || strpos($_SERVER['REQUEST_URI'], '/protest-listings/feed') !== false) {
+            $query->set('post_type', 'cf7_protest-listing'); // Only 'cf7_protest-listing' for /protest-listings/feed/
+        } else {
+            $query->set('post_type', array('post', 'cf7_protest-listing')); // Regular feed includes both standard posts and protest listings
+        }
+    }
+}
+
+// Optional: Customize RSS content
+function custom_rss_content($content)
+{
+    if (get_post_type() == 'cf7_protest-listing') {
+        $custom_field = get_post_meta(get_the_ID(), 'custom_field_name', true);
+        $content .= '<p><strong>Custom Field:</strong> ' . esc_html($custom_field) . '</p>';
+    }
+    return $content;
 }
 function novoiceunheard_register_query_vars($vars) {
     $vars[] = 'inquiry';

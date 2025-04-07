@@ -33,3 +33,6 @@ add_action('wp_dashboard_setup', 'custom_dashboard_widget', 999);
 
 add_action('init', 'novoiceunheard_contact_rewrite_rule');
 add_filter('query_vars', 'novoiceunheard_register_query_vars');
+add_action('pre_get_posts', 'add_custom_post_types_to_rss_feed');
+add_filter('the_excerpt_rss', 'custom_rss_content');
+add_filter('the_content_feed', 'custom_rss_content');
