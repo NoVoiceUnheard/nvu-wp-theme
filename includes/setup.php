@@ -26,16 +26,53 @@ function create_navigation_block_menu()
     ));
 }
 // Enqueue parent theme styles
+function novoiceunheard_strip_assets_on_links_page() {
+    if (is_page('links')) {
+        // Deregister default scripts/styles you don’t want
+        wp_dequeue_style('twentytwentyfive'); // Example: theme CSS
+        wp_dequeue_style('wp-block-library'); // Block editor styles
+        wp_dequeue_style('wp-block-library-theme'); // Block theme CSS
+
+        wp_dequeue_script('jquery');
+        wp_dequeue_script('wp-embed');
+        wp_dequeue_script('select2-js'); // If enqueued elsewhere
+        wp_dequeue_style('select2-css');
+
+        wp_dequeue_style('contact-form-7');
+        wp_dequeue_script('contact-form-7'); // Optional: remove JS too
+
+        wp_dequeue_style('wp-sms');
+        wp_dequeue_script('wp-sms'); // Optional: remove JS too
+
+        wp_dequeue_style('newsletter');
+        wp_dequeue_script('newsletter'); // Optional: remove JS too
+
+        // Optional: Remove Emoji scripts and styles
+        remove_action('wp_head', 'print_emoji_detection_script', 7);
+        remove_action('wp_print_styles', 'print_emoji_styles');
+    }
+}
 function novoiceunheard_enqueue_styles()
 {
-    $theme_version = wp_get_theme()->get('Version'); // Uses theme version as cache buster
+    $theme_version = wp_get_theme()->get('Version'); // Cache busting charm
+    if (is_page('links')) {
+        // Only load brand.css on the /links page
+        wp_enqueue_style(
+            'brand-css',
+            get_stylesheet_directory_uri() . '/brand.css',
+            [],
+            $theme_version
+        );
+        return;
+    }
+
+    // Default styles for all other pages
     wp_enqueue_style('twentytwentyfive', get_template_directory_uri() . '/style.css');
     wp_enqueue_style('novoiceunheard', get_stylesheet_directory_uri() . '/style.css', ['twentytwentyfive'], $theme_version);
-    // Enqueue Select2 CSS
-    wp_enqueue_style('select2-css', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css');
 
-    // Enqueue Select2 JS
-    wp_enqueue_script('select2-js', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array('jquery'), null, true);
+    // Select2 goodies
+    wp_enqueue_style('select2-css', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css');
+    wp_enqueue_script('select2-js', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', ['jquery'], null, true);
 }
 
 /* Check & Notify if Plugins Are Missing */
@@ -70,26 +107,27 @@ function novoiceunheard_check_required_plugins()
     }
 }
 // add query params to body class
-function add_query_params_to_body_class($classes)
-{
-    if (!empty($_GET)) {
-        foreach ($_GET as $key => $value) {
-            $sanitized_key = sanitize_html_class($key);
-
-            if (is_array($value)) {
-                foreach ($value as $sub_value) {
-                    $sanitized_sub_value = sanitize_html_class($sub_value);
-                    $classes[] = "query-{$sanitized_key}-{$sanitized_sub_value}";
-                }
-            } else {
-                $sanitized_value = sanitize_html_class($value);
-                $classes[] = "query-{$sanitized_key}";
-                if (!empty($sanitized_value)) {
-                    $classes[] = "query-{$sanitized_key}-{$sanitized_value}";
-                }
+function add_query_vars_to_body_class($classes) {
+    // Handle 'state'
+    $state = get_query_var('state');
+    if (!empty($state)) {
+        if (is_array($state)) {
+            foreach ($state as $val) {
+                $classes[] = 'query-state-' . sanitize_html_class($val);
             }
+        } else {
+            $classes[] = 'query-state';
+            $classes[] = 'query-state-' . sanitize_html_class($state);
         }
     }
+
+    // Handle 'inquiry'
+    $inquiry = get_query_var('inquiry');
+    if (!empty($inquiry)) {
+        $classes[] = 'query-inquiry';
+        $classes[] = 'query-inquiry-' . sanitize_html_class($inquiry);
+    }
+
     return $classes;
 }
 // Auto create pages
@@ -277,4 +315,12 @@ function custom_dashboard_widget_display() {
         update_option('custom_dashboard_card_content', wp_kses_post($_POST['dashboard_card_content']));
         echo '<p style="color: green;">Saved! Refresh to see the changes.</p>';
     }
+}
+
+function novoiceunheard_contact_rewrite_rule() {
+    add_rewrite_rule('^contact/(general|press|volunteer)/?$', 'index.php?pagename=contact&inquiry=$matches[1]', 'top');
+}
+function novoiceunheard_register_query_vars($vars) {
+    $vars[] = 'inquiry';
+    return $vars;
 }

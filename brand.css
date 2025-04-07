@@ -1,0 +1,51 @@
+:root :where(.wp-element-button, .wp-block-button__link) {
+    background-color: var(--wp--preset--color--accent-1);
+    border-width: 0;
+    color: var(--wp--preset--color--accent-2);
+    font-family: inherit;
+    font-size: clamp(0.875rem, 0.875rem + ((1vw - 0.2rem) * 0.409), 1.1rem);
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    line-height: 2;
+    padding-top: 1rem;
+    padding-right: 2.25rem;
+    padding-bottom: 1rem;
+    padding-left: 2.25rem;
+    text-decoration: none;
+      text-decoration-thickness: auto;
+    text-transform: uppercase;
+  }
+  .wp-block-social-link {
+    border-radius: 9999px;
+    display: block;
+    height: auto;
+    transition: transform .1s ease;
+  }
+  .wp-block-social-links .wp-block-social-link.wp-social-link {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+  }
+  .screen-reader-text {
+    clip: rect(1px,1px,1px,1px);
+    word-wrap: normal !important;
+    border: 0;
+    clip-path: inset(50%);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    overflow-wrap: normal !important;
+    padding: 0;
+    position: absolute !important;
+    width: 1px;
+  }
+  .has-text-align-center {
+    text-align: center;
+  }
+  :root :where(.is-layout-constrained) > * {
+    margin-block: 1.2rem;
+  }
+  body .is-layout-flex {
+	gap: clamp(30px, 5vw, 50px);
+}
