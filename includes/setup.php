@@ -56,7 +56,7 @@ function novoiceunheard_strip_assets_on_links_page()
 function novoiceunheard_enqueue_styles()
 {
     $theme_version = wp_get_theme()->get('Version'); // Cache busting charm
-    if (is_page('links')) {
+    if (is_page('links') || is_page('map')) {
         // Only load brand.css on the /links page
         wp_enqueue_style(
             'brand-css',
