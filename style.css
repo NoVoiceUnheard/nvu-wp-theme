@@ -4,13 +4,15 @@ Theme URI: https://github.com/NoVoiceUnheard/nvu-wp-theme/
 Description: Child theme for Twenty Twenty-Five
 Author: @natedoesweb
 Template: twentytwentyfive
-Version: 1.0.11
+Version: 1.0.13
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: novoiceunheard
 */
 /* Contact Page */
-
+.hidden {
+	display: none;
+}
 .page .contact-general,
 .page .contact-press,
 .page .contact-volunteer {
@@ -137,6 +139,9 @@ Text Domain: novoiceunheard
 	background-repeat: no-repeat;
 	background-size: 16px 24px;
 	background-position: calc(100% - 8px) center;
+}
+.cf7-submission-list li.pending {
+	background-color: var(--wp--preset--color--accent-3);
 }
 .cf7-submission-list .submission-content {
 	padding: 15px 24px 15px 15px;
@@ -332,6 +337,9 @@ h2 {
 	}
 	.wp-block-table td {
 		padding: 0.2rem;
+	}
+	:root :where(.wp-block-group) {
+		border-radius: 0;
 	}
 }
 
