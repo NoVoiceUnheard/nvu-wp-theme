@@ -29,33 +29,36 @@ function create_navigation_block_menu()
 function novoiceunheard_strip_assets_on_links_page()
 {
     if (is_page('links')) {
-        // Deregister default scripts/styles you don’t want
-        wp_dequeue_style('twentytwentyfive'); // Example: theme CSS
-        wp_dequeue_style('wp-block-library'); // Block editor styles
-        wp_dequeue_style('wp-block-library-theme'); // Block theme CSS
-
+        // Keep these removed
         wp_dequeue_script('jquery');
         wp_dequeue_script('wp-embed');
-        wp_dequeue_script('select2-js'); // If enqueued elsewhere
         wp_dequeue_style('select2-css');
-
+        wp_dequeue_script('select2-js');
         wp_dequeue_style('contact-form-7');
-        wp_dequeue_script('contact-form-7'); // Optional: remove JS too
-
+        wp_dequeue_script('contact-form-7');
         wp_dequeue_style('wp-sms');
-        wp_dequeue_script('wp-sms'); // Optional: remove JS too
-
+        wp_dequeue_script('wp-sms');
         wp_dequeue_style('newsletter');
-        wp_dequeue_script('newsletter'); // Optional: remove JS too
+        wp_dequeue_script('newsletter');
+        wp_dequeue_style('give');
+        wp_dequeue_script('give');
 
-        // Optional: Remove Emoji scripts and styles
+        // Optional: Remove emoji scripts
         remove_action('wp_head', 'print_emoji_detection_script', 7);
         remove_action('wp_print_styles', 'print_emoji_styles');
+
+        // ✨ But *keep* the block styles for logo block!
+        // So comment this one out or remove it:
+        // wp_dequeue_style('wp-block-library');
+
+        // If needed, also re-enable block editor JS (depends on how you load buttons):
+        // wp_dequeue_script('wp-block-editor'); ← don’t run this line
     }
 }
 function novoiceunheard_enqueue_styles()
 {
     $theme_version = wp_get_theme()->get('Version'); // Cache busting charm
+
     if (is_page('links') || is_page('map')) {
         // Only load brand.css on the /links page
         wp_enqueue_style(
@@ -67,8 +70,10 @@ function novoiceunheard_enqueue_styles()
         return;
     }
 
-    // Default styles for all other pages
-    wp_enqueue_style('twentytwentyfive', get_template_directory_uri() . '/style.css');
+    // Only enqueue the parent style once!
+    wp_enqueue_style('twentytwentyfive', get_template_directory_uri() . '/style.css'); // Parent theme stylesheet
+
+    // Enqueue the child theme styles after the parent
     wp_enqueue_style('novoiceunheard', get_stylesheet_directory_uri() . '/style.css', ['twentytwentyfive'], $theme_version);
 
     // Select2 goodies
@@ -376,4 +381,77 @@ function custom_protest_listings_title($title)
         $title = 'Protest Listings in ' . ucfirst(sanitize_text_field($state)) . ' - NoVoiceUnheard';
     }
     return $title;
+}
+// 1. Add a submenu page under "Tools"
+add_action('admin_menu', function() {
+    add_submenu_page(
+        'tools.php', // Parent menu
+        'Migrate State Tags', // Page title
+        'Migrate State Tags', // Menu title
+        'manage_options', // Capability
+        'migrate-state-tags', // Slug
+        'nvu_render_state_tag_migration_page' // Callback
+    );
+});
+
+// 2. Render the admin page
+function nvu_render_state_tag_migration_page() {
+    if ( isset($_POST['nvu_migrate_tags']) && check_admin_referer('nvu_migrate_tags_action', 'nvu_migrate_tags_nonce') ) {
+        nvu_migrate_state_tags();
+    }
+
+    ?>
+    <div class="wrap">
+        <h1>Migrate State Tags</h1>
+        <form method="post">
+            <?php wp_nonce_field('nvu_migrate_tags_action', 'nvu_migrate_tags_nonce'); ?>
+            <p>This will copy old <code>post_tag</code> tags into your new <code>state</code> taxonomy on the updated posts.</p>
+            <input type="submit" name="nvu_migrate_tags" class="button button-primary" value="Run Migration">
+        </form>
+    </div>
+    <?php
+}
+
+// 3. Run the migration on submit
+function nvu_migrate_state_tags() {
+    $args = array(
+        'post_type' => 'cf7_protest-listing',
+        'posts_per_page' => -1,
+    );
+
+    $old_posts = get_posts( $args );
+    $old_taxonomy = 'post_tag';
+    $new_taxonomy = 'state';
+    $count = 0;
+
+    foreach ( $old_posts as $post ) {
+        $terms = wp_get_object_terms($post->ID, 'post_tag', array('fields' => 'names'));
+        if (!empty($terms) && !is_wp_error($terms)) {
+            wp_set_object_terms($post->ID, $terms, 'state', true);
+        }
+        $count++;
+    }
+
+    echo '<div class="notice notice-success is-dismissible"><p>Migration complete. Tags copied to ' . $count . ' posts.</p></div>';
+}
+function nvunheard_add_state_rewrite_rules() {
+    // Rule for the first page of the state archive
+    add_rewrite_rule(
+        '^protest-listings/state/([^/]+)/?$',
+        'index.php?post_type=cf7_protest-listing&state=$matches[1]',
+        'top'
+    );
+
+    // Rule for paginated pages of the state archive
+    add_rewrite_rule(
+        '^protest-listings/state/([^/]+)/page/([0-9]{1,})/?$',
+        'index.php?post_type=cf7_protest-listing&state=$matches[1]&paged=$matches[2]',
+        'top'
+    );
+    // Custom page: submit-listing
+    add_rewrite_rule(
+        '^protest-listings/submit-listing/?$',
+        'index.php?pagename=protest-listings/submit-listing',
+        'top'
+    );
 }

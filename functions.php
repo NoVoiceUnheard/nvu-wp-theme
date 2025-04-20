@@ -23,6 +23,7 @@ add_filter('body_class', 'add_query_vars_to_body_class');
 
 add_action('admin_init', 'novoiceunheard_check_required_plugins');
 
+// add_action('wp_head', 'add_google_analytics');
 // Hook into the admin bar
 add_action('admin_bar_menu', 'add_custom_admin_bar_link', 100);
 
@@ -38,3 +39,4 @@ add_filter('the_content_feed', 'custom_rss_content');
 add_filter('pre_get_document_title', 'custom_protest_listings_title');
 // Hook into Yoast SEO title
 add_filter('wpseo_title', 'custom_protest_listings_title');
+add_action('init', 'nvunheard_add_state_rewrite_rules');

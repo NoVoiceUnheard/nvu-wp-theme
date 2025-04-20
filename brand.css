@@ -1,7 +1,7 @@
 :root :where(.wp-element-button, .wp-block-button__link) {
-  background-color: var(--wp--preset--color--accent-1);
+  background-color: var(#a3d9a1);
   border-width: 0;
-  color: var(--wp--preset--color--accent-2);
+  color: var(#090940);
   font-family: inherit;
   font-size: clamp(0.875rem, 0.875rem + ((1vw - 0.2rem) * 0.409), 1.1rem);
   font-style: normal;
@@ -59,7 +59,19 @@ body {
 body .is-layout-flex {
   gap: clamp(15px, 1vw, 50px);
 }
+.wp-block-button__link {
+  background: #a3d9a1;
+  color: #090940;
+  padding: 0.6em 1em;
+  border-radius: 4px;
+  text-decoration: none;
+  display: inline-block;
+  margin: 0.5em 0;
+}
 
+.wp-block-button__link:hover {
+  background: color-mix(in srgb, var(--wp--preset--color--contrast) 85%, transparent);
+}
 /* MAP */
 #protest-map svg {
   color: white;
@@ -79,6 +91,6 @@ body .is-layout-flex {
 }
 
 #protest-map a:hover {
-  color: var(--wp--preset--color--accent-3);
+  color: var(#a3d9a1);
   transition: color 0s;
 }
