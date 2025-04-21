@@ -454,4 +454,9 @@ function nvunheard_add_state_rewrite_rules() {
         'index.php?pagename=protest-listings/submit-listing',
         'top'
     );
+    add_rewrite_rule(
+        '^volunteer/?$',
+        'index.php?pagename=volunteer',
+        'top'
+    );
 }
